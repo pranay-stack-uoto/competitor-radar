@@ -1,0 +1,12 @@
+node_modules
+.next
+.env*
+!.env.example
+.vercel
+
+# local archives
+*.zip
+
+# backups contain customer data: never commit them
+backups/
+*.radarbackup

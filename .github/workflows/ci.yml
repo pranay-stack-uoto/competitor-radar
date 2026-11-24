@@ -1,0 +1,56 @@
+# Free GitHub Actions only. No production credentials: every value below is a dummy used to let the build run.
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Lint (catches names that are used but never imported or defined)
+        run: npm run lint
+      - name: Unit and integration tests (in-process Postgres, no services needed)
+        run: npm test
+      - name: Production build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://example.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: dummy-anon-key
+      - name: Dependency audit (informational)
+        run: npm audit --omit=dev || true
+
+  postgres:
+    # Needs a real Postgres server: these tests use several simultaneous connections to prove that job claiming,
+    # crawl locks and rate limits are correct under real concurrency.
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run test:postgres
+        env:
+          TEST_DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres

@@ -1,0 +1,1509 @@
+{
+ "STRONG/full": {
+  "seo": {
+   "score": 83.4,
+   "checks": [
+    {
+     "name": "Title tags (30-65 chars)",
+     "value": 0.3333333333333333,
+     "weight": 2,
+     "note": "0 pages missing a title"
+    },
+    {
+     "name": "Unique titles",
+     "value": 1,
+     "weight": 1,
+     "note": "0 duplicate titles"
+    },
+    {
+     "name": "Meta descriptions (70-160 chars)",
+     "value": 1,
+     "weight": 2,
+     "note": "0 pages missing a description"
+    },
+    {
+     "name": "Exactly one H1",
+     "value": 1,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Subheadings (H2) present",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Content depth (avg words)",
+     "value": 0.29833333333333334,
+     "weight": 2,
+     "note": "179 words per page on average"
+    },
+    {
+     "name": "Image alt text",
+     "value": 0.5,
+     "weight": 1,
+     "note": "3/6 images have alt text"
+    },
+    {
+     "name": "Canonical tags",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Mobile viewport",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "HTTPS",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Open Graph tags",
+     "value": 1,
+     "weight": 0.5,
+     "note": null
+    },
+    {
+     "name": "XML sitemap",
+     "value": 1,
+     "weight": 1,
+     "note": "3 URLs listed"
+    },
+    {
+     "name": "robots.txt",
+     "value": 1,
+     "weight": 0.5,
+     "note": null
+    },
+    {
+     "name": "Server response time",
+     "value": 1,
+     "weight": 1,
+     "note": "170 ms average"
+    },
+    {
+     "name": "Crawl errors",
+     "value": 1,
+     "weight": 1,
+     "note": "0 URLs failed"
+    },
+    {
+     "name": "Redirects (chains and loops)",
+     "value": 1,
+     "weight": 1,
+     "note": "No redirects among 3 internal URLs checked"
+    },
+    {
+     "name": "Broken internal links",
+     "value": 1,
+     "weight": 2,
+     "note": "None among 3 internal URLs checked"
+    },
+    {
+     "name": "Indexable pages (no stray noindex)",
+     "value": 1,
+     "weight": 1.5,
+     "note": "0 of 3 crawled pages are noindex"
+    },
+    {
+     "name": "Orphan pages (no internal links)",
+     "value": 0,
+     "weight": 1,
+     "note": "2 of 3 sitemap pages have no internal links, e.g. /bathroom, /contact"
+    },
+    {
+     "name": "Duplicate descriptions, H1s and content",
+     "value": 1,
+     "weight": 1,
+     "note": "0 pages share a meta description, 0 share an H1, 0 have identical text"
+    },
+    {
+     "name": "Image file size (sampled)",
+     "value": 1,
+     "weight": 1,
+     "note": "0 of 3 sampled images are over 300 KB"
+    },
+    {
+     "name": "PageSpeed mobile performance",
+     "value": null,
+     "weight": 3,
+     "note": "PageSpeed unavailable"
+    }
+   ],
+   "note": null
+  },
+  "geo": {
+   "score": 62.1,
+   "checks": [
+    {
+     "name": "AI crawlers allowed",
+     "value": 1,
+     "weight": 3,
+     "note": "No AI bot is blocked"
+    },
+    {
+     "name": "llms.txt published",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Organization schema",
+     "value": 1,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Entity links (sameAs profiles)",
+     "value": 0.6666666666666667,
+     "weight": 1.5,
+     "note": "2 sameAs links"
+    },
+    {
+     "name": "FAQ / Q&A content",
+     "value": 1,
+     "weight": 2,
+     "note": "3 pages with question headings or FAQ schema"
+    },
+    {
+     "name": "FAQPage / HowTo schema",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Article / authorship signals",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Structured, scannable pages",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Substantive content (>400 words)",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Mentioned in AI answers (live probe)",
+     "value": null,
+     "weight": 4,
+     "note": "Disabled: set ANTHROPIC_API_KEY to enable"
+    }
+   ],
+   "note": null
+  },
+  "local": {
+   "score": 100,
+   "checks": [
+    {
+     "name": "LocalBusiness schema",
+     "value": 1,
+     "weight": 3,
+     "note": null
+    },
+    {
+     "name": "Schema has address + geo/areaServed",
+     "value": 1,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Phone number published",
+     "value": 1,
+     "weight": 1.5,
+     "note": "3 pages with click-to-call"
+    },
+    {
+     "name": "Street address published",
+     "value": 1,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Google Maps embed",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Review / rating markup",
+     "value": 1,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Location / contact pages",
+     "value": 1,
+     "weight": 1,
+     "note": "1 location-style pages"
+    },
+    {
+     "name": "Target locations in content",
+     "value": 1,
+     "weight": 2,
+     "note": "3/3 pages mention Pune, Mumbai"
+    },
+    {
+     "name": "Target locations in titles/H1",
+     "value": 1,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Google Business Profile rating & reviews",
+     "value": null,
+     "weight": 4,
+     "note": "Disabled: set GOOGLE_PLACES_API_KEY to enable"
+    }
+   ],
+   "note": null
+  },
+  "keywords": {
+   "score": 44.8,
+   "checks": [
+    {
+     "name": "Coverage: \"plumber pune\"",
+     "value": 0.6,
+     "weight": 1,
+     "note": "title 1, H1 1, body 2 pages"
+    },
+    {
+     "name": "Google position: \"plumber pune\"",
+     "value": 0.91,
+     "weight": 2,
+     "note": "#3"
+    },
+    {
+     "name": "Coverage: \"bathroom plumbing\"",
+     "value": 0.6,
+     "weight": 1,
+     "note": "title 1, H1 1, body 2 pages"
+    },
+    {
+     "name": "Google position: \"bathroom plumbing\"",
+     "value": 0.5049999999999999,
+     "weight": 2,
+     "note": "#12"
+    },
+    {
+     "name": "Coverage: \"geyser repair\"",
+     "value": 0,
+     "weight": 1,
+     "note": "title 0, H1 0, body 0 pages"
+    },
+    {
+     "name": "Google position: \"geyser repair\"",
+     "value": 0,
+     "weight": 2,
+     "note": "Not in top 20"
+    }
+   ],
+   "note": null
+  }
+ },
+ "STRONG/bare": {
+  "seo": {
+   "score": 83.4,
+   "checks": [
+    {
+     "name": "Title tags (30-65 chars)",
+     "value": 0.3333333333333333,
+     "weight": 2,
+     "note": "0 pages missing a title"
+    },
+    {
+     "name": "Unique titles",
+     "value": 1,
+     "weight": 1,
+     "note": "0 duplicate titles"
+    },
+    {
+     "name": "Meta descriptions (70-160 chars)",
+     "value": 1,
+     "weight": 2,
+     "note": "0 pages missing a description"
+    },
+    {
+     "name": "Exactly one H1",
+     "value": 1,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Subheadings (H2) present",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Content depth (avg words)",
+     "value": 0.29833333333333334,
+     "weight": 2,
+     "note": "179 words per page on average"
+    },
+    {
+     "name": "Image alt text",
+     "value": 0.5,
+     "weight": 1,
+     "note": "3/6 images have alt text"
+    },
+    {
+     "name": "Canonical tags",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Mobile viewport",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "HTTPS",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Open Graph tags",
+     "value": 1,
+     "weight": 0.5,
+     "note": null
+    },
+    {
+     "name": "XML sitemap",
+     "value": 1,
+     "weight": 1,
+     "note": "3 URLs listed"
+    },
+    {
+     "name": "robots.txt",
+     "value": 1,
+     "weight": 0.5,
+     "note": null
+    },
+    {
+     "name": "Server response time",
+     "value": 1,
+     "weight": 1,
+     "note": "170 ms average"
+    },
+    {
+     "name": "Crawl errors",
+     "value": 1,
+     "weight": 1,
+     "note": "0 URLs failed"
+    },
+    {
+     "name": "Redirects (chains and loops)",
+     "value": 1,
+     "weight": 1,
+     "note": "No redirects among 3 internal URLs checked"
+    },
+    {
+     "name": "Broken internal links",
+     "value": 1,
+     "weight": 2,
+     "note": "None among 3 internal URLs checked"
+    },
+    {
+     "name": "Indexable pages (no stray noindex)",
+     "value": 1,
+     "weight": 1.5,
+     "note": "0 of 3 crawled pages are noindex"
+    },
+    {
+     "name": "Orphan pages (no internal links)",
+     "value": 0,
+     "weight": 1,
+     "note": "2 of 3 sitemap pages have no internal links, e.g. /bathroom, /contact"
+    },
+    {
+     "name": "Duplicate descriptions, H1s and content",
+     "value": 1,
+     "weight": 1,
+     "note": "0 pages share a meta description, 0 share an H1, 0 have identical text"
+    },
+    {
+     "name": "Image file size (sampled)",
+     "value": 1,
+     "weight": 1,
+     "note": "0 of 3 sampled images are over 300 KB"
+    },
+    {
+     "name": "PageSpeed mobile performance",
+     "value": null,
+     "weight": 3,
+     "note": "PageSpeed unavailable"
+    }
+   ],
+   "note": null
+  },
+  "geo": {
+   "score": 62.1,
+   "checks": [
+    {
+     "name": "AI crawlers allowed",
+     "value": 1,
+     "weight": 3,
+     "note": "No AI bot is blocked"
+    },
+    {
+     "name": "llms.txt published",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Organization schema",
+     "value": 1,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Entity links (sameAs profiles)",
+     "value": 0.6666666666666667,
+     "weight": 1.5,
+     "note": "2 sameAs links"
+    },
+    {
+     "name": "FAQ / Q&A content",
+     "value": 1,
+     "weight": 2,
+     "note": "3 pages with question headings or FAQ schema"
+    },
+    {
+     "name": "FAQPage / HowTo schema",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Article / authorship signals",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Structured, scannable pages",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Substantive content (>400 words)",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Mentioned in AI answers (live probe)",
+     "value": null,
+     "weight": 4,
+     "note": "Disabled: set ANTHROPIC_API_KEY to enable"
+    }
+   ],
+   "note": null
+  },
+  "local": {
+   "score": 100,
+   "checks": [
+    {
+     "name": "LocalBusiness schema",
+     "value": 1,
+     "weight": 3,
+     "note": null
+    },
+    {
+     "name": "Schema has address + geo/areaServed",
+     "value": 1,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Phone number published",
+     "value": 1,
+     "weight": 1.5,
+     "note": "3 pages with click-to-call"
+    },
+    {
+     "name": "Street address published",
+     "value": 1,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Google Maps embed",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Review / rating markup",
+     "value": 1,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Location / contact pages",
+     "value": 1,
+     "weight": 1,
+     "note": "1 location-style pages"
+    },
+    {
+     "name": "Target locations in content",
+     "value": null,
+     "weight": 2,
+     "note": "No locations configured"
+    },
+    {
+     "name": "Target locations in titles/H1",
+     "value": null,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Google Business Profile rating & reviews",
+     "value": null,
+     "weight": 4,
+     "note": "Disabled: set GOOGLE_PLACES_API_KEY to enable"
+    }
+   ],
+   "note": null
+  },
+  "keywords": {
+   "score": 0,
+   "checks": [],
+   "note": "No keywords configured"
+  }
+ },
+ "WEAK/full": {
+  "seo": {
+   "score": 28.7,
+   "checks": [
+    {
+     "name": "Title tags (30-65 chars)",
+     "value": 0,
+     "weight": 2,
+     "note": "0 pages missing a title"
+    },
+    {
+     "name": "Unique titles",
+     "value": 0.5,
+     "weight": 1,
+     "note": "1 duplicate titles"
+    },
+    {
+     "name": "Meta descriptions (70-160 chars)",
+     "value": 0,
+     "weight": 2,
+     "note": "0 pages missing a description"
+    },
+    {
+     "name": "Exactly one H1",
+     "value": 0,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Subheadings (H2) present",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Content depth (avg words)",
+     "value": 0.011666666666666714,
+     "weight": 2,
+     "note": "7 words per page on average"
+    },
+    {
+     "name": "Image alt text",
+     "value": 0.5,
+     "weight": 1,
+     "note": "2/4 images have alt text"
+    },
+    {
+     "name": "Canonical tags",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Mobile viewport",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "HTTPS",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Open Graph tags",
+     "value": 1,
+     "weight": 0.5,
+     "note": null
+    },
+    {
+     "name": "XML sitemap",
+     "value": 0,
+     "weight": 1,
+     "note": "0 URLs listed"
+    },
+    {
+     "name": "robots.txt",
+     "value": 0,
+     "weight": 0.5,
+     "note": null
+    },
+    {
+     "name": "Server response time",
+     "value": 1,
+     "weight": 1,
+     "note": "160 ms average"
+    },
+    {
+     "name": "Crawl errors",
+     "value": 0,
+     "weight": 1,
+     "note": "1 URLs failed"
+    },
+    {
+     "name": "Redirects (chains and loops)",
+     "value": 0,
+     "weight": 1,
+     "note": "1 chains or loops and 0 single redirects among 3 internal URLs checked, e.g. /old to /"
+    },
+    {
+     "name": "Broken internal links",
+     "value": 0,
+     "weight": 2,
+     "note": "1 broken among 3 internal URLs checked, e.g. /x (404)"
+    },
+    {
+     "name": "Indexable pages (no stray noindex)",
+     "value": 1,
+     "weight": 1.5,
+     "note": "0 of 2 crawled pages are noindex"
+    },
+    {
+     "name": "Orphan pages (no internal links)",
+     "value": null,
+     "weight": 1,
+     "note": "Only 2 of 0 sitemap pages crawled, too few to judge"
+    },
+    {
+     "name": "Duplicate descriptions, H1s and content",
+     "value": 0,
+     "weight": 1,
+     "note": "2 pages share a meta description, 0 share an H1, 0 have identical text"
+    },
+    {
+     "name": "Image file size (sampled)",
+     "value": 0,
+     "weight": 1,
+     "note": "2 of 3 sampled images are over 300 KB, largest 1953 KB (/big.jpg)"
+    },
+    {
+     "name": "PageSpeed mobile performance",
+     "value": null,
+     "weight": 3,
+     "note": "PageSpeed unavailable"
+    }
+   ],
+   "note": null
+  },
+  "geo": {
+   "score": 20.7,
+   "checks": [
+    {
+     "name": "AI crawlers allowed",
+     "value": 1,
+     "weight": 3,
+     "note": "No AI bot is blocked"
+    },
+    {
+     "name": "llms.txt published",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Organization schema",
+     "value": 0,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Entity links (sameAs profiles)",
+     "value": 0,
+     "weight": 1.5,
+     "note": "0 sameAs links"
+    },
+    {
+     "name": "FAQ / Q&A content",
+     "value": 0,
+     "weight": 2,
+     "note": "0 pages with question headings or FAQ schema"
+    },
+    {
+     "name": "FAQPage / HowTo schema",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Article / authorship signals",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Structured, scannable pages",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Substantive content (>400 words)",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Mentioned in AI answers (live probe)",
+     "value": null,
+     "weight": 4,
+     "note": "Disabled: set ANTHROPIC_API_KEY to enable"
+    }
+   ],
+   "note": null
+  },
+  "local": {
+   "score": 20,
+   "checks": [
+    {
+     "name": "LocalBusiness schema",
+     "value": 0,
+     "weight": 3,
+     "note": null
+    },
+    {
+     "name": "Schema has address + geo/areaServed",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Phone number published",
+     "value": 1,
+     "weight": 1.5,
+     "note": "2 pages with click-to-call"
+    },
+    {
+     "name": "Street address published",
+     "value": 1,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Google Maps embed",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Review / rating markup",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Location / contact pages",
+     "value": 0,
+     "weight": 1,
+     "note": "0 location-style pages"
+    },
+    {
+     "name": "Target locations in content",
+     "value": 0,
+     "weight": 2,
+     "note": "0/2 pages mention Pune, Mumbai"
+    },
+    {
+     "name": "Target locations in titles/H1",
+     "value": 0,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Google Business Profile rating & reviews",
+     "value": null,
+     "weight": 4,
+     "note": "Disabled: set GOOGLE_PLACES_API_KEY to enable"
+    }
+   ],
+   "note": null
+  },
+  "keywords": {
+   "score": 31.4,
+   "checks": [
+    {
+     "name": "Coverage: \"plumber pune\"",
+     "value": 0,
+     "weight": 1,
+     "note": "title 0, H1 0, body 0 pages"
+    },
+    {
+     "name": "Google position: \"plumber pune\"",
+     "value": 0.91,
+     "weight": 2,
+     "note": "#3"
+    },
+    {
+     "name": "Coverage: \"bathroom plumbing\"",
+     "value": 0,
+     "weight": 1,
+     "note": "title 0, H1 0, body 0 pages"
+    },
+    {
+     "name": "Google position: \"bathroom plumbing\"",
+     "value": 0.5049999999999999,
+     "weight": 2,
+     "note": "#12"
+    },
+    {
+     "name": "Coverage: \"geyser repair\"",
+     "value": 0,
+     "weight": 1,
+     "note": "title 0, H1 0, body 0 pages"
+    },
+    {
+     "name": "Google position: \"geyser repair\"",
+     "value": 0,
+     "weight": 2,
+     "note": "Not in top 20"
+    }
+   ],
+   "note": null
+  }
+ },
+ "WEAK/bare": {
+  "seo": {
+   "score": 28.7,
+   "checks": [
+    {
+     "name": "Title tags (30-65 chars)",
+     "value": 0,
+     "weight": 2,
+     "note": "0 pages missing a title"
+    },
+    {
+     "name": "Unique titles",
+     "value": 0.5,
+     "weight": 1,
+     "note": "1 duplicate titles"
+    },
+    {
+     "name": "Meta descriptions (70-160 chars)",
+     "value": 0,
+     "weight": 2,
+     "note": "0 pages missing a description"
+    },
+    {
+     "name": "Exactly one H1",
+     "value": 0,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Subheadings (H2) present",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Content depth (avg words)",
+     "value": 0.011666666666666714,
+     "weight": 2,
+     "note": "7 words per page on average"
+    },
+    {
+     "name": "Image alt text",
+     "value": 0.5,
+     "weight": 1,
+     "note": "2/4 images have alt text"
+    },
+    {
+     "name": "Canonical tags",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Mobile viewport",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "HTTPS",
+     "value": 1,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Open Graph tags",
+     "value": 1,
+     "weight": 0.5,
+     "note": null
+    },
+    {
+     "name": "XML sitemap",
+     "value": 0,
+     "weight": 1,
+     "note": "0 URLs listed"
+    },
+    {
+     "name": "robots.txt",
+     "value": 0,
+     "weight": 0.5,
+     "note": null
+    },
+    {
+     "name": "Server response time",
+     "value": 1,
+     "weight": 1,
+     "note": "160 ms average"
+    },
+    {
+     "name": "Crawl errors",
+     "value": 0,
+     "weight": 1,
+     "note": "1 URLs failed"
+    },
+    {
+     "name": "Redirects (chains and loops)",
+     "value": 0,
+     "weight": 1,
+     "note": "1 chains or loops and 0 single redirects among 3 internal URLs checked, e.g. /old to /"
+    },
+    {
+     "name": "Broken internal links",
+     "value": 0,
+     "weight": 2,
+     "note": "1 broken among 3 internal URLs checked, e.g. /x (404)"
+    },
+    {
+     "name": "Indexable pages (no stray noindex)",
+     "value": 1,
+     "weight": 1.5,
+     "note": "0 of 2 crawled pages are noindex"
+    },
+    {
+     "name": "Orphan pages (no internal links)",
+     "value": null,
+     "weight": 1,
+     "note": "Only 2 of 0 sitemap pages crawled, too few to judge"
+    },
+    {
+     "name": "Duplicate descriptions, H1s and content",
+     "value": 0,
+     "weight": 1,
+     "note": "2 pages share a meta description, 0 share an H1, 0 have identical text"
+    },
+    {
+     "name": "Image file size (sampled)",
+     "value": 0,
+     "weight": 1,
+     "note": "2 of 3 sampled images are over 300 KB, largest 1953 KB (/big.jpg)"
+    },
+    {
+     "name": "PageSpeed mobile performance",
+     "value": null,
+     "weight": 3,
+     "note": "PageSpeed unavailable"
+    }
+   ],
+   "note": null
+  },
+  "geo": {
+   "score": 20.7,
+   "checks": [
+    {
+     "name": "AI crawlers allowed",
+     "value": 1,
+     "weight": 3,
+     "note": "No AI bot is blocked"
+    },
+    {
+     "name": "llms.txt published",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Organization schema",
+     "value": 0,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Entity links (sameAs profiles)",
+     "value": 0,
+     "weight": 1.5,
+     "note": "0 sameAs links"
+    },
+    {
+     "name": "FAQ / Q&A content",
+     "value": 0,
+     "weight": 2,
+     "note": "0 pages with question headings or FAQ schema"
+    },
+    {
+     "name": "FAQPage / HowTo schema",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Article / authorship signals",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Structured, scannable pages",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Substantive content (>400 words)",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Mentioned in AI answers (live probe)",
+     "value": null,
+     "weight": 4,
+     "note": "Disabled: set ANTHROPIC_API_KEY to enable"
+    }
+   ],
+   "note": null
+  },
+  "local": {
+   "score": 27.3,
+   "checks": [
+    {
+     "name": "LocalBusiness schema",
+     "value": 0,
+     "weight": 3,
+     "note": null
+    },
+    {
+     "name": "Schema has address + geo/areaServed",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Phone number published",
+     "value": 1,
+     "weight": 1.5,
+     "note": "2 pages with click-to-call"
+    },
+    {
+     "name": "Street address published",
+     "value": 1,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Google Maps embed",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Review / rating markup",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Location / contact pages",
+     "value": 0,
+     "weight": 1,
+     "note": "0 location-style pages"
+    },
+    {
+     "name": "Target locations in content",
+     "value": null,
+     "weight": 2,
+     "note": "No locations configured"
+    },
+    {
+     "name": "Target locations in titles/H1",
+     "value": null,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Google Business Profile rating & reviews",
+     "value": null,
+     "weight": 4,
+     "note": "Disabled: set GOOGLE_PLACES_API_KEY to enable"
+    }
+   ],
+   "note": null
+  },
+  "keywords": {
+   "score": 0,
+   "checks": [],
+   "note": "No keywords configured"
+  }
+ },
+ "EMPTY/full": {
+  "seo": {
+   "score": 0,
+   "checks": [],
+   "note": "No pages could be crawled"
+  },
+  "geo": {
+   "score": 20.7,
+   "checks": [
+    {
+     "name": "AI crawlers allowed",
+     "value": 1,
+     "weight": 3,
+     "note": "No AI bot is blocked"
+    },
+    {
+     "name": "llms.txt published",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Organization schema",
+     "value": 0,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Entity links (sameAs profiles)",
+     "value": 0,
+     "weight": 1.5,
+     "note": "0 sameAs links"
+    },
+    {
+     "name": "FAQ / Q&A content",
+     "value": 0,
+     "weight": 2,
+     "note": "0 pages with question headings or FAQ schema"
+    },
+    {
+     "name": "FAQPage / HowTo schema",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Article / authorship signals",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Structured, scannable pages",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Substantive content (>400 words)",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Mentioned in AI answers (live probe)",
+     "value": null,
+     "weight": 4,
+     "note": "Disabled: set ANTHROPIC_API_KEY to enable"
+    }
+   ],
+   "note": null
+  },
+  "local": {
+   "score": 0,
+   "checks": [
+    {
+     "name": "LocalBusiness schema",
+     "value": 0,
+     "weight": 3,
+     "note": null
+    },
+    {
+     "name": "Schema has address + geo/areaServed",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Phone number published",
+     "value": 0,
+     "weight": 1.5,
+     "note": "0 pages with click-to-call"
+    },
+    {
+     "name": "Street address published",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Google Maps embed",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Review / rating markup",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Location / contact pages",
+     "value": 0,
+     "weight": 1,
+     "note": "0 location-style pages"
+    },
+    {
+     "name": "Target locations in content",
+     "value": 0,
+     "weight": 2,
+     "note": "0/1 pages mention Pune, Mumbai"
+    },
+    {
+     "name": "Target locations in titles/H1",
+     "value": 0,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Google Business Profile rating & reviews",
+     "value": null,
+     "weight": 4,
+     "note": "Disabled: set GOOGLE_PLACES_API_KEY to enable"
+    }
+   ],
+   "note": null
+  },
+  "keywords": {
+   "score": 31.4,
+   "checks": [
+    {
+     "name": "Coverage: \"plumber pune\"",
+     "value": 0,
+     "weight": 1,
+     "note": "title 0, H1 0, body 0 pages"
+    },
+    {
+     "name": "Google position: \"plumber pune\"",
+     "value": 0.91,
+     "weight": 2,
+     "note": "#3"
+    },
+    {
+     "name": "Coverage: \"bathroom plumbing\"",
+     "value": 0,
+     "weight": 1,
+     "note": "title 0, H1 0, body 0 pages"
+    },
+    {
+     "name": "Google position: \"bathroom plumbing\"",
+     "value": 0.5049999999999999,
+     "weight": 2,
+     "note": "#12"
+    },
+    {
+     "name": "Coverage: \"geyser repair\"",
+     "value": 0,
+     "weight": 1,
+     "note": "title 0, H1 0, body 0 pages"
+    },
+    {
+     "name": "Google position: \"geyser repair\"",
+     "value": 0,
+     "weight": 2,
+     "note": "Not in top 20"
+    }
+   ],
+   "note": null
+  }
+ },
+ "EMPTY/bare": {
+  "seo": {
+   "score": 0,
+   "checks": [],
+   "note": "No pages could be crawled"
+  },
+  "geo": {
+   "score": 20.7,
+   "checks": [
+    {
+     "name": "AI crawlers allowed",
+     "value": 1,
+     "weight": 3,
+     "note": "No AI bot is blocked"
+    },
+    {
+     "name": "llms.txt published",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Organization schema",
+     "value": 0,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Entity links (sameAs profiles)",
+     "value": 0,
+     "weight": 1.5,
+     "note": "0 sameAs links"
+    },
+    {
+     "name": "FAQ / Q&A content",
+     "value": 0,
+     "weight": 2,
+     "note": "0 pages with question headings or FAQ schema"
+    },
+    {
+     "name": "FAQPage / HowTo schema",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Article / authorship signals",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Structured, scannable pages",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Substantive content (>400 words)",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Mentioned in AI answers (live probe)",
+     "value": null,
+     "weight": 4,
+     "note": "Disabled: set ANTHROPIC_API_KEY to enable"
+    }
+   ],
+   "note": null
+  },
+  "local": {
+   "score": 0,
+   "checks": [
+    {
+     "name": "LocalBusiness schema",
+     "value": 0,
+     "weight": 3,
+     "note": null
+    },
+    {
+     "name": "Schema has address + geo/areaServed",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Phone number published",
+     "value": 0,
+     "weight": 1.5,
+     "note": "0 pages with click-to-call"
+    },
+    {
+     "name": "Street address published",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Google Maps embed",
+     "value": 0,
+     "weight": 1,
+     "note": null
+    },
+    {
+     "name": "Review / rating markup",
+     "value": 0,
+     "weight": 1.5,
+     "note": null
+    },
+    {
+     "name": "Location / contact pages",
+     "value": 0,
+     "weight": 1,
+     "note": "0 location-style pages"
+    },
+    {
+     "name": "Target locations in content",
+     "value": null,
+     "weight": 2,
+     "note": "No locations configured"
+    },
+    {
+     "name": "Target locations in titles/H1",
+     "value": null,
+     "weight": 2,
+     "note": null
+    },
+    {
+     "name": "Google Business Profile rating & reviews",
+     "value": null,
+     "weight": 4,
+     "note": "Disabled: set GOOGLE_PLACES_API_KEY to enable"
+    }
+   ],
+   "note": null
+  },
+  "keywords": {
+   "score": 0,
+   "checks": [],
+   "note": "No keywords configured"
+  }
+ }
+}

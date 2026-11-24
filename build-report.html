@@ -1,0 +1,656 @@
+<title>Competitor Radar Build Report</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: sticky contents rail on the left, one reading column on the right. Tables carry the numbers, a few CSS charts carry the shape. */
+:root{
+  --bg:#f5f7f9; --surface:#ffffff; --ink:#16212c; --muted:#5b6978; --line:#dbe1e8; --soft:#eef2f6;
+  --accent:#0b6b73; --accent-soft:#dcefef; --good:#17794a; --good-soft:#e1f2e8; --warn:#a85a00; --warn-soft:#fbefd9; --bad:#b3261e; --bad-soft:#fbe4e1;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f161d; --surface:#16202a; --ink:#e6edf3; --muted:#98a6b4; --line:#2a3743; --soft:#1c2833;
+  --accent:#4fc3c9; --accent-soft:#12363a; --good:#5cc98d; --good-soft:#173324; --warn:#e0a24a; --warn-soft:#3a2c14; --bad:#f08178; --bad-soft:#3d1f1c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f161d; --surface:#16202a; --ink:#e6edf3; --muted:#98a6b4; --line:#2a3743; --soft:#1c2833;
+  --accent:#4fc3c9; --accent-soft:#12363a; --good:#5cc98d; --good-soft:#173324; --warn:#e0a24a; --warn-soft:#3a2c14; --bad:#f08178; --bad-soft:#3d1f1c; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.shell{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:210px minmax(0,1fr);gap:44px}
+.toc{position:sticky;top:20px;align-self:start;font-size:13px;display:flex;flex-direction:column;gap:2px}
+.toc b{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:600}
+.toc a{color:var(--muted);text-decoration:none;padding:4px 0 4px 10px;border-left:2px solid var(--line)}
+.toc a:hover{color:var(--ink);border-left-color:var(--accent)}
+main{min-width:0}
+header.top{padding-bottom:22px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.eyebrow{font-size:12px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:600}
+h1{font-size:34px;line-height:1.15;margin:6px 0 10px;font-weight:700;text-wrap:balance;letter-spacing:-.01em}
+.meta{display:flex;flex-wrap:wrap;gap:6px 18px;color:var(--muted);font-size:13px}
+h2{font-size:22px;line-height:1.25;margin:0 0 4px;font-weight:650;text-wrap:balance}
+h3{font-size:15px;margin:22px 0 6px;font-weight:650}
+section{padding-top:36px;scroll-margin-top:12px}
+.lede{color:var(--muted);margin:0 0 14px;max-width:68ch}
+p{margin:0 0 12px;max-width:72ch}
+ul,ol{margin:0 0 12px;padding-left:20px;max-width:72ch}
+li{margin-bottom:4px}
+code,.mono{font-family:var(--f-mono);font-size:12.5px}
+code{background:var(--soft);padding:1px 5px;border-radius:3px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:18px 0}
+.stat{background:var(--surface);border:1px solid var(--line);padding:14px 16px;border-radius:6px}
+.stat .v{font-family:var(--f-mono);font-size:26px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1.2}
+.stat .l{font-size:12.5px;color:var(--muted);margin-top:4px}
+.tw{overflow-x:auto;margin:10px 0 16px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;background:var(--soft);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;white-space:nowrap}
+td.k{font-weight:600;white-space:nowrap}
+tr.tot td{font-weight:650;background:var(--soft)}
+.note,.flag,.risk{padding:12px 16px;border-radius:6px;margin:14px 0;font-size:14px;max-width:none}
+.note{background:var(--accent-soft)} .flag{background:var(--warn-soft)} .risk{background:var(--bad-soft)}
+.note b,.flag b,.risk b{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+.note b{color:var(--accent)} .flag b{color:var(--warn)} .risk b{color:var(--bad)}
+.note p:last-child,.flag p:last-child,.risk p:last-child{margin-bottom:0}
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:1px 8px;border-radius:10px;white-space:nowrap}
+.p-good{background:var(--good-soft);color:var(--good)} .p-warn{background:var(--warn-soft);color:var(--warn)} .p-bad{background:var(--bad-soft);color:var(--bad)} .p-n{background:var(--soft);color:var(--muted)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.two>*{min-width:0}
+.bar{display:flex;height:22px;border-radius:3px;overflow:hidden;background:var(--soft);margin:4px 0 2px}
+.bar i{display:block;height:100%}
+.bar .c1{background:var(--bad)} .bar .c2{background:var(--warn)} .bar .c3{background:var(--good)}
+.barrow{display:grid;grid-template-columns:150px minmax(0,1fr);gap:12px;align-items:center;margin-bottom:10px;font-size:13px}
+.barrow .cap{font-size:12px;color:var(--muted);font-family:var(--f-mono)}
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:12px;color:var(--muted);margin:6px 0 12px}
+.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;background:var(--c)}
+.gantt{min-width:700px;padding:10px 14px}
+.g-row{display:grid;grid-template-columns:200px minmax(0,1fr);gap:10px;align-items:center;padding:6px 0;border-top:1px solid var(--line);font-size:13px}
+.g-row:first-child{border-top:0}
+.g-t{display:grid;grid-template-columns:repeat(22,1fr);height:16px;align-items:center}
+.g-t i{display:block;height:14px;border-radius:2px;background:var(--accent)}
+.g-t i.live{background:var(--good)} .g-t i.grey{background:var(--muted)}
+.g-t em{font-style:normal;text-align:center;font-size:10px;color:var(--muted);font-family:var(--f-mono)}
+.g-t .ms{width:12px;height:12px;background:var(--warn);transform:rotate(45deg);justify-self:center;border-radius:2px}
+.calc{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;margin:12px 0}
+.calc .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:14px}
+.calc label{display:flex;flex-direction:column;font-size:12px;color:var(--muted);gap:4px}
+.calc input,.calc select{font:inherit;font-family:var(--f-mono);font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px 8px;width:100%}
+.calc input:focus-visible,.calc select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.out{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.out div{background:var(--soft);padding:10px 12px;border-radius:5px}
+.out span{display:block;font-size:11.5px;color:var(--muted)}
+.out b{font-family:var(--f-mono);font-size:18px;font-weight:500}
+.good{color:var(--good)} .bad{color:var(--bad)}
+.mermaid{background:var(--surface);padding:12px;margin:0}
+footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:12.5px}
+@media (max-width:960px){
+  .shell{grid-template-columns:minmax(0,1fr);gap:0}
+  .toc{position:static;flex-direction:row;flex-wrap:wrap;gap:6px 14px;padding:10px 0 4px;border-bottom:1px solid var(--line)}
+  .toc b{width:100%;margin-bottom:0}
+  .toc a{border-left:0;padding:0}
+  h1{font-size:27px}
+  .barrow{grid-template-columns:minmax(0,1fr)}
+}
+@media print{.toc{display:none}.shell{display:block}}
+</style>
+
+<div class="shell">
+<nav class="toc" aria-label="Contents">
+  <b>Contents</b>
+  <a href="#summary">1 Summary</a>
+  <a href="#changes">2 Changes to the outline</a>
+  <a href="#product">3 Plans and packaging</a>
+  <a href="#current">4 System as built</a>
+  <a href="#architecture">5 Target architecture</a>
+  <a href="#data">6 Data model</a>
+  <a href="#ai">7 Live AI tracking</a>
+  <a href="#integrations">8 Auto-fix integrations</a>
+  <a href="#billing">9 Billing and tax</a>
+  <a href="#security">10 Security and compliance</a>
+  <a href="#plan">11 Build plan</a>
+  <a href="#costs">12 Cost structure</a>
+  <a href="#finance">13 Financial model</a>
+  <a href="#risks">14 Risks</a>
+  <a href="#decisions">15 Decisions needed</a>
+  <a href="#assumptions">16 Assumptions to verify</a>
+</nav>
+
+<main>
+<header class="top">
+  <div class="eyebrow">For CTO and CFO review</div>
+  <h1>Competitor Radar: technical and financial plan for a paid product</h1>
+  <div class="meta"><span>Draft 1.0, 5 November 2026</span><span>Prepared for Pranay Sheth</span><span>Currency: INR, converted at ₹88 to $1</span><span>All prices exclude 18% GST</span></div>
+</header>
+
+<section id="summary">
+  <h2>1. Summary</h2>
+  <p class="lede">Competitor Radar already scores a site and its competitors every day, tracks fixes, and reads Search Console. This plan turns it into a subscription product with a free tier, live AI-assistant tracking, and one-click fixes on the customer's own website.</p>
+  <div class="stats">
+    <div class="stat"><div class="v">Week 8</div><div class="l">Public paid launch, one developer, billing + AI tracking + alerts</div></div>
+    <div class="stat"><div class="v">20 pw</div><div class="l">Person-weeks for everything up to agency features (about 5 months for one developer)</div></div>
+    <div class="stat"><div class="v">₹2.0–3.7L</div><div class="l">Cash to reach launch if built in-house. ₹6.0–9.7L with a contract developer</div></div>
+    <div class="stat"><div class="v">₹3.3L</div><div class="l">Month-12 monthly revenue, base case (176 paying accounts)</div></div>
+    <div class="stat"><div class="v">53%</div><div class="l">Gross margin in the base case, after free-tier and payment costs</div></div>
+  </div>
+  <p><b>What we ask the reviewers to decide.</b> The technical choices in section 15 (worker platform, queue, key management, v1 integration scope) and the commercial choices (legal entity and GST set-up, final prices, AI cost cap, payment gateway for foreign customers).</p>
+  <p><b>The three things that matter most.</b></p>
+  <ol>
+    <li><b>AI query cost is the main financial risk.</b> If the cost per AI query doubles and prices fall 20%, the base case drops from ₹1.39L a month to a loss. Plan limits, shared caching and a hard monthly cost cap are part of the design, not later polish.</li>
+    <li><b>Auto-fix is the differentiator and the largest liability.</b> It must be approval-first, reversible and logged. Section 8 sets the rules.</li>
+    <li><b>The crawler is not ready for paying strangers.</b> It has no protection against being pointed at internal addresses, and it runs inside time-limited serverless functions. Both are fixed in the first three weeks.</li>
+  </ol>
+  <p><b>Recommendation.</b> Build in this order: billing and hardening, then AI tracking, then alerts, and launch paid at week 8. Add integrations after launch, starting with Cloudflare because it needs no marketplace approval. Raise Growth to ₹3,499 and Agency to ₹12,999 if early customer interviews allow it (section 13.4).</p>
+</section>
+
+<section id="changes">
+  <h2>2. Changes to the earlier outline</h2>
+  <p class="lede">When the costs were worked out per plan, four numbers from the first outline did not hold. They are corrected here so the reviewers do not compare against the old figures.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Item</th><th>Earlier outline</th><th>This report</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Agency AI checks</td><td>50 prompts daily, 4 engines</td><td>50 prompts weekly on 4 engines, plus 10 priority prompts daily on 2 engines</td><td>The old limit would cost about ₹10,500 a month in queries alone, more than the ₹9,999 price</td></tr>
+      <tr><td class="k">Agency sites</td><td>15</td><td>10</td><td>Keeps crawl and report cost in range</td></tr>
+      <tr><td class="k">Growth margin</td><td>65–75%</td><td>57%</td><td>Query cost recalculated at 430 queries a month</td></tr>
+      <tr><td class="k">Break-even</td><td>25–30 customers</td><td>About 35 paying accounts</td><td>Now includes payment fees and free-tier cost</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="product">
+  <h2>3. Plans and packaging</h2>
+  <p class="lede">The free tier shows the problem. Paid plans give the history, the alerts, the AI tracking and the fixes. Limits are enforced on the server.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Feature</th><th>Free</th><th>Starter ₹999</th><th>Growth ₹2,999</th><th>Agency ₹9,999</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Sites</td><td>1</td><td>1</td><td>3</td><td>10, with client logins</td></tr>
+      <tr><td class="k">Competitors per site</td><td>3</td><td>5</td><td>10</td><td>10</td></tr>
+      <tr><td class="k">Scan frequency</td><td>Weekly</td><td>Daily</td><td>Daily</td><td>Daily</td></tr>
+      <tr><td class="k">Scores and leaderboard</td><td>Yes, top 3 shown</td><td>Full</td><td>Full</td><td>Full</td></tr>
+      <tr><td class="k">Search Console data</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td class="k">Fix list</td><td>Top 3</td><td>All</td><td>All</td><td>All</td></tr>
+      <tr><td class="k">Report and AI brief</td><td>Preview</td><td>Full</td><td>Full</td><td>Full, white-label</td></tr>
+      <tr><td class="k">Change alerts and digest</td><td>No</td><td>Email</td><td>Email and WhatsApp</td><td>Email and WhatsApp</td></tr>
+      <tr><td class="k">History kept</td><td>30 days</td><td>6 months</td><td>2 years</td><td>Unlimited</td></tr>
+      <tr><td class="k">Live AI tracking</td><td>4 queries a month</td><td>10 prompts, 2 engines, weekly (86 queries)</td><td>25 prompts, 4 engines, weekly (430 queries)</td><td>50 prompts, 4 engines, weekly, plus 10 prompts daily on 2 engines (1,460 queries)</td></tr>
+      <tr><td class="k">Auto-fix integrations</td><td>No</td><td>No</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td class="k">Seats and API</td><td>1</td><td>1</td><td>3 seats</td><td>10 seats and API</td></tr>
+    </tbody>
+  </table></div>
+  <p>Free abuse control: one free project per verified domain, which the ownership check already enforces. Annual billing at ten times the monthly price (two months free) improves cash flow but cuts the margin, for example Growth falls from 57% to 49% on an annual payment.</p>
+</section>
+
+<section id="current">
+  <h2>4. System as built</h2>
+  <p class="lede">Everything below is running in production at competitor-radar-nu-two.vercel.app, used by the owner and a few beta testers.</p>
+  <div class="two">
+    <div>
+      <h3>Stack</h3>
+      <ul>
+        <li>Next.js 15 (App Router), client pages using the Supabase browser client under row-level security</li>
+        <li>Supabase Postgres in Mumbai (ap-south-1), email-code sign-in</li>
+        <li>Vercel serverless functions and cron (crawl 9:00 IST, report 10:00 IST)</li>
+        <li>Serper for Google search and Maps, cheerio for crawling, Claude Haiku for extraction and Sonnet for insights</li>
+        <li>Postgres <code>jobs</code> table as the work queue</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Features live</h3>
+      <ul>
+        <li>Domain ownership proof, keyword and location extraction, competitor discovery</li>
+        <li>Four-area score (SEO 0.30, AI visibility 0.25, Local 0.20, Keywords 0.25), leaderboard, history</li>
+        <li>Improvement report with a Markdown brief for AI assistants</li>
+        <li>Daily change detection, mark-fix-done with before and after tracking</li>
+        <li>Google Search Console connection (read-only, encrypted refresh tokens, 28-day snapshots)</li>
+        <li>Privacy and terms pages, redesigned dashboard</li>
+      </ul>
+    </div>
+  </div>
+  <h3>Gaps that block charging money</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Gap</th><th>Risk</th><th>Fix</th><th>Phase</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Vercel Hobby plan</td><td>Not licensed for commercial use</td><td>Move to Vercel Pro</td><td><span class="pill p-bad">A</span></td></tr>
+      <tr><td class="k">Crawler accepts any URL</td><td>A user could point it at internal or cloud-metadata addresses (SSRF)</td><td>Block private ranges, resolve and pin DNS, limit redirects, size and time</td><td><span class="pill p-bad">A</span></td></tr>
+      <tr><td class="k">Crawls run in serverless functions</td><td>Time limits, cold starts, cost grows with volume</td><td>Move crawling and probing to a long-running worker</td><td><span class="pill p-bad">A</span></td></tr>
+      <tr><td class="k">Token encryption key derives from the service-role key</td><td>Rotating the database key makes every stored token unreadable</td><td>Dedicated, versioned encryption key (KMS if affordable)</td><td><span class="pill p-warn">A</span></td></tr>
+      <tr><td class="k">Sign-in email through personal Gmail</td><td>Daily send cap, poor deliverability, wrong sender</td><td>Resend on a company domain with SPF, DKIM and DMARC</td><td><span class="pill p-bad">A</span></td></tr>
+      <tr><td class="k">No plan or usage limits</td><td>Anyone can use unlimited paid resources</td><td>Entitlements enforced in API routes and the worker</td><td><span class="pill p-bad">A</span></td></tr>
+      <tr><td class="k">No rate limiting, error monitoring, staging or CI</td><td>Abuse and silent failures</td><td>Rate limits, Sentry, staging project, automated tests on scoring and billing</td><td><span class="pill p-warn">A</span></td></tr>
+      <tr><td class="k">Discovery runs daily</td><td>Search cost with little new information</td><td>Weekly discovery, daily scoring only</td><td><span class="pill p-warn">A</span></td></tr>
+      <tr><td class="k">Fixed IST schedule</td><td>Wrong delivery time for other time zones</td><td>Per-user time zone for digests (scans stay global)</td><td><span class="pill p-n">C</span></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="architecture">
+  <h2>5. Target architecture</h2>
+  <p class="lede">The web app stays on Vercel. Heavy and long work moves to workers. Postgres remains the queue and the source of truth until volume proves otherwise.</p>
+  <div class="tw"><pre class="mermaid">
+flowchart LR
+  U["Customer browser"] --> W["Next.js app on Vercel"]
+  W --> API["API routes: auth, entitlements, billing"]
+  API --> DB[("Supabase Postgres with row-level security")]
+  CR["Cron 9:00 and 10:00 IST"] --> Q["Job queue in Postgres"]
+  API --> Q
+  Q --> WK["Workers on Fly.io: crawl, score, AI probes"]
+  WK --> DB
+  WK --> OBJ[("Object storage: raw snapshots")]
+  WK --> SRP["Serper search"]
+  WK --> LLM["AI engines: OpenAI, Gemini, Perplexity, Claude"]
+  API <--> RZP["Razorpay subscriptions"]
+  API --> CON["Connectors: Cloudflare, WordPress, Shopify, Wix"]
+  CON --> SITE["Customer website"]
+  WK --> NOT["Resend email and WhatsApp"]
+  </pre></div>
+  <h3>Design decisions</h3>
+  <ul>
+    <li><b>Shared crawl cache.</b> A competitor domain is crawled once a day no matter how many customers track it. This lowers cost and builds the daily history of every domain, which a new rival cannot backfill.</li>
+    <li><b>Workers pull jobs with <code>FOR UPDATE SKIP LOCKED</code>.</b> This lets several workers run safely. If volume outgrows Postgres, move to a managed queue (Inngest, Trigger.dev or QStash) without changing the job shapes.</li>
+    <li><b>Entitlements are computed on the server</b> from the active subscription row, and checked in every API route and in the worker before spending money.</li>
+    <li><b>Raw snapshots go to object storage</b> (Supabase Storage or Cloudflare R2). Postgres keeps scores, summaries and indexes only.</li>
+    <li><b>Provider abstraction</b> for search and AI engines, so a price rise or policy change at one vendor means a config change.</li>
+  </ul>
+  <h3>Sizing, base case (month 12)</h3>
+  <p>About 280 paid sites, roughly 1,500 distinct paid-tracked domains after sharing, plus about 860 free-tier crawls a day. At an assumed 45 seconds per crawl and 10 concurrent crawls per worker, this is 2 to 3 small workers. AI probes: about 46,600 queries a month, spread across the day to stay under provider rate limits.</p>
+  <h3>Service levels to commit to</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Measure</th><th>Target at launch</th><th>Target at scale</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Daily report ready by 10:00 IST</td><td>95% of days</td><td>99% of days</td></tr>
+      <tr><td class="k">App availability</td><td>99.5%</td><td>99.9%</td></tr>
+      <tr><td class="k">Data loss window (RPO)</td><td>24 hours (daily backup)</td><td>5 minutes (point-in-time recovery)</td></tr>
+      <tr><td class="k">Recovery time (RTO)</td><td>8 hours</td><td>2 hours</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="data">
+  <h2>6. Data model additions</h2>
+  <p class="lede">New tables for billing, AI tracking, integrations and agency teams. All carry an owner or workspace id and row-level security.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Table</th><th>Purpose</th><th>Key fields</th></tr></thead>
+    <tbody>
+      <tr><td class="k">plans</td><td>Plan catalogue and limits</td><td>code, price, sites, competitors, ai_queries_month, scan_frequency, features (json)</td></tr>
+      <tr><td class="k">subscriptions</td><td>Mirror of the Razorpay subscription</td><td>workspace_id, plan, razorpay_subscription_id, status, current_period_end, grace_until</td></tr>
+      <tr><td class="k">invoices</td><td>GST invoices</td><td>number, gstin, place_of_supply, taxable_value, cgst, sgst, igst, razorpay_payment_id</td></tr>
+      <tr><td class="k">usage_counters</td><td>Metered usage per period</td><td>workspace_id, period, metric, used, cap</td></tr>
+      <tr><td class="k">workspaces, members</td><td>Teams and agency client access</td><td>owner, role (owner, admin, viewer), invited_email</td></tr>
+      <tr><td class="k">ai_prompts</td><td>Prompts tracked per site</td><td>project_id, text, intent, engines, cadence, source (generated or custom)</td></tr>
+      <tr><td class="k">ai_answers</td><td>One row per query run</td><td>prompt_id, engine, run_at, raw_text, mentions (json), cited_urls, cost_cents</td></tr>
+      <tr><td class="k">ai_metrics_daily</td><td>Rolled-up mention rate and share of voice</td><td>project_id, day, engine, mention_rate, share_of_voice, top_competitor</td></tr>
+      <tr><td class="k">integration_connections</td><td>Connected sites, encrypted tokens</td><td>project_id, platform, scopes, token_ciphertext, key_version, status</td></tr>
+      <tr><td class="k">change_proposals</td><td>Every automatic change</td><td>project_id, kind, target, before, after, status (proposed, approved, applied, verified, reverted), approved_by, rollback_data</td></tr>
+      <tr><td class="k">audit_log</td><td>Who did what, when</td><td>actor, action, object, ip, at</td></tr>
+      <tr><td class="k">api_keys</td><td>Agency API access</td><td>workspace_id, hash, last_used_at, scopes</td></tr>
+      <tr><td class="k">site_snapshots</td><td>Pointer to raw daily data</td><td>domain, day, storage_path, size, hash</td></tr>
+    </tbody>
+  </table></div>
+  <p>Storage estimate: about 60 KB per domain per day compressed. At 6,000 domains that is roughly 130 GB a year in object storage, around $2 a month. AI answers add under 2 GB a year.</p>
+</section>
+
+<section id="ai">
+  <h2>7. Live AI visibility tracking</h2>
+  <p class="lede">Today's AI score checks signals on the site. The paid feature asks AI assistants real questions and records who they recommend.</p>
+  <h3>How it works</h3>
+  <ol>
+    <li>Claude Haiku turns the site's keywords and locations into 10 to 50 buyer-style prompts, for example "best turnkey interior contractor in Vadodara". The customer can edit them.</li>
+    <li>A worker sends each prompt to the plan's engines through their official APIs with web search switched on: OpenAI, Gemini with Google Search grounding, Perplexity Sonar, and Claude with web search.</li>
+    <li>A parser records which brands and domains appear, in what position, with what sentiment, and which URLs are cited.</li>
+    <li>Daily roll-ups give mention rate, share of voice against tracked competitors, and the sources the engines trust.</li>
+  </ol>
+  <h3>Rules that keep it honest</h3>
+  <ul>
+    <li>Answers vary between runs. Report a mention rate over repeated runs, never a single yes or no.</li>
+    <li>API answers can differ from what a person sees in the consumer app, where personalisation applies. Say this on the screen.</li>
+    <li>Identical prompt, engine and location requests are cached for 24 hours across customers.</li>
+    <li>Each provider's terms on storing and displaying answers must be checked. Google, for example, may require showing its search suggestions beside grounded answers.</li>
+    <li>A monthly query budget per plan is enforced before each call. A global daily spend cap stops the queue if cost runs ahead of plan.</li>
+  </ul>
+  <h3>Cost per month, using an assumed $0.02 average per query</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Plan</th><th class="n">Queries</th><th class="n">Cost in ₹</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Free</td><td class="n">4</td><td class="n">7</td></tr>
+      <tr><td class="k">Starter</td><td class="n">86</td><td class="n">150</td></tr>
+      <tr><td class="k">Growth</td><td class="n">430</td><td class="n">757</td></tr>
+      <tr><td class="k">Agency</td><td class="n">1,460</td><td class="n">2,570</td></tr>
+    </tbody>
+  </table></div>
+  <div class="flag"><b>Verify before launch</b><p>The $0.02 average is an estimate across four engines with search tools. Run a two-week measurement on 20 real prompts before fixing plan limits. Prices differ by engine and change often.</p></div>
+  <p><b>Market position.</b> Funded companies already sell AI-visibility tracking in USD, among them Ahrefs, Semrush, Profound and Peec. The wedge here is INR pricing, local service businesses in India, WhatsApp delivery, automatic competitor discovery, and the fix-and-verify loop.</p>
+</section>
+
+<section id="integrations">
+  <h2>8. Auto-fix integrations</h2>
+  <p class="lede">Connect the customer's platform once, then apply approved fixes from the dashboard.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Platform</th><th>Access method</th><th>What v1 can change</th><th>Approval needed</th><th>Effort</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Cloudflare</td><td>Customer creates a scoped API token</td><td>Redirect rules, response headers, serving <code>llms.txt</code> and <code>robots.txt</code> from a Worker</td><td>None</td><td>1.5 pw</td></tr>
+      <tr><td class="k">WordPress</td><td>Application password through the core REST API, or a small plugin</td><td>Titles and meta descriptions (Yoast and Rank Math fields), JSON-LD, redirects</td><td>None for REST. Plugin directory review if a plugin is shipped</td><td>1.5 pw</td></tr>
+      <tr><td class="k">Shopify</td><td>OAuth app, Admin GraphQL API</td><td>Product and page SEO titles and descriptions, URL redirects, JSON-LD through a theme app extension</td><td>App Store review to list publicly. Custom distribution works for early customers</td><td>3 pw</td></tr>
+      <tr><td class="k">Wix</td><td>OAuth app from the Wix developer dashboard</td><td>SEO settings and structured data, subject to API coverage</td><td>App Market review to list publicly</td><td>3 pw</td></tr>
+    </tbody>
+  </table></div>
+  <div class="flag"><b>Spike first</b><p>Wix API coverage for SEO fields is the least certain. Run a three-day spike before committing the 3 person-weeks. The same applies to Yoast and Rank Math fields over REST.</p></div>
+  <h3>Safety rules for every automatic change</h3>
+  <ol>
+    <li><b>Propose.</b> The tool lists the exact change and the page.</li>
+    <li><b>Preview.</b> The customer sees before and after.</li>
+    <li><b>Approve.</b> Only a signed-in owner or admin can approve. Nothing is applied without a click.</li>
+    <li><b>Apply and snapshot.</b> The previous value is stored before writing.</li>
+    <li><b>Verify.</b> The next scan confirms the change is live and the page still loads.</li>
+    <li><b>Undo.</b> One click restores the snapshot. Every step is in the audit log.</li>
+  </ol>
+  <p>v1 limits itself to low-risk, reversible items: meta tags, structured data, redirects, <code>llms.txt</code> and <code>robots.txt</code>. It does not rewrite page copy automatically. Access is requested with the narrowest scopes each platform offers, tokens are encrypted, and the customer can disconnect at any time.</p>
+</section>
+
+<section id="billing">
+  <h2>9. Billing and tax</h2>
+  <h3>Razorpay Subscriptions flow</h3>
+  <ol>
+    <li>Create one Razorpay plan per tier and billing period (monthly and annual).</li>
+    <li>The customer starts checkout from the billing page. Cards and UPI AutoPay are supported.</li>
+    <li>Webhooks drive state: <code>subscription.authenticated</code>, <code>activated</code>, <code>charged</code>, <code>pending</code>, <code>halted</code>, <code>cancelled</code>, <code>completed</code>, and <code>payment.failed</code>. Every webhook is verified by HMAC signature and processed once, keyed by event id.</li>
+    <li>The <code>subscriptions</code> row is the single source for entitlements. A failed payment starts a 7-day grace period with reminder emails, then the account drops to Free. Data is kept, features lock.</li>
+    <li>Upgrades take effect at once with the price difference charged. Downgrades take effect at the next renewal.</li>
+  </ol>
+  <h3>GST and invoicing</h3>
+  <ul>
+    <li>18% GST on software subscriptions. Gujarat customers pay CGST 9% plus SGST 9%. Customers in other states pay IGST 18%. The place of supply comes from the customer's billing state.</li>
+    <li>A sequential invoice per payment, with the customer's GSTIN when given. E-invoicing becomes mandatory above the turnover threshold. Confirm the current threshold and the registration timing with a chartered accountant.</li>
+    <li>Annual plans are prepaid. Revenue is recognised monthly and the unearned part sits as deferred revenue.</li>
+    <li>Payment fees are about 2% plus GST on the fee, so about 2.8% of the ex-GST price. The GST on the fee is claimable as input credit.</li>
+  </ul>
+  <h3>Customers outside India</h3>
+  <p>Razorpay can take international cards if enabled on the account. A merchant-of-record provider such as Paddle or Lemon Squeezy handles foreign sales tax for a higher fee (commonly around 5% plus a fixed amount). Decide this before opening to non-Indian users.</p>
+</section>
+
+<section id="security">
+  <h2>10. Security and compliance</h2>
+  <div class="tw"><table>
+    <thead><tr><th>Area</th><th>Control</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Tenant isolation</td><td>Row-level security on every table. Service-role key used only in server code and workers. Automated tests that try to read another tenant's rows.</td></tr>
+      <tr><td class="k">Crawler safety</td><td>Block private, loopback and link-local ranges. Resolve DNS once and connect to that address to defeat rebinding. Limit redirects, response size and time. Obey robots.txt. Identify the crawler by user agent with a contact page.</td></tr>
+      <tr><td class="k">Secrets and tokens</td><td>Versioned encryption key separate from database keys. Tokens never logged or returned to the browser. Rotation procedure written and tested.</td></tr>
+      <tr><td class="k">Abuse</td><td>Rate limits per user and per IP. Email verification. Domain ownership proof. Spend caps per plan and globally.</td></tr>
+      <tr><td class="k">Payments</td><td>Card data never touches our servers. Webhook signature checks. Idempotent handlers.</td></tr>
+      <tr><td class="k">Backups</td><td>Daily database backups at launch. Point-in-time recovery once there are more than about 100 paying accounts. A restore drill every quarter.</td></tr>
+      <tr><td class="k">Monitoring</td><td>Sentry for errors, uptime checks, an alert if the 10:00 IST report is late, a daily cost report per vendor.</td></tr>
+      <tr><td class="k">Google OAuth</td><td>The Search Console scope is read-only but sensitive. The app is currently capped at 100 users until Google verifies it. Start verification during Phase A. It needs the privacy page, a demo video and a justified scope.</td></tr>
+      <tr><td class="k">Data protection law</td><td>India's Digital Personal Data Protection Act 2023 and its rules: notice and consent, deletion on request, breach notification, processor list. Counsel to confirm the phase-in dates.</td></tr>
+      <tr><td class="k">Terms</td><td>Legal review of the terms and privacy pages, plus language limiting liability for automatic changes and for AI-answer accuracy.</td></tr>
+      <tr><td class="k">Enterprise (later)</td><td>Single sign-on, SOC 2 report, uptime commitment. Build only when a paying customer asks, because SOC 2 alone costs thousands of dollars a year.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="plan">
+  <h2>11. Build plan</h2>
+  <p class="lede">Effort is in person-weeks (pw) for one experienced developer. A second developer shortens the calendar to about 12–14 weeks.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Phase</th><th class="n">Effort</th><th>Scope</th><th>Done when</th></tr></thead>
+    <tbody>
+      <tr><td class="k">A. Foundation and billing</td><td class="n">3 pw</td><td>Plans, entitlements, usage counters, Razorpay, GST invoices, billing page, Vercel Pro, worker, SSRF protection, rate limits, Resend, Sentry, staging, key management, Google verification submitted</td><td>A test customer can subscribe, upgrade, fail a payment and cancel, and limits hold</td></tr>
+      <tr><td class="k">B. Live AI tracking</td><td class="n">3 pw</td><td>Prompt generation, four engine adapters, parser, roll-ups, dashboard section, query budgets and cost cap</td><td>Two weeks of real prompts measured, cost per query known</td></tr>
+      <tr><td class="k">C. Digest and alerts</td><td class="n">2 pw</td><td>Daily email, WhatsApp alerts, notification preferences, per-user time zone</td><td>Alerts arrive on time for a week without manual help</td></tr>
+      <tr><td class="k">D1. Cloudflare</td><td class="n">1.5 pw</td><td>Token connect, proposal and approval flow, redirects, headers, llms.txt</td><td>Fix applied, verified and undone on a test zone</td></tr>
+      <tr><td class="k">D2. WordPress</td><td class="n">1.5 pw</td><td>REST connect, meta and schema changes</td><td>Same test on a test site with Yoast</td></tr>
+      <tr><td class="k">D3. Shopify</td><td class="n">3 pw</td><td>OAuth app, SEO fields, redirects, theme extension, review submission</td><td>Works on a development store and is submitted</td></tr>
+      <tr><td class="k">D4. Wix</td><td class="n">3 pw</td><td>OAuth app, SEO and schema, review submission</td><td>Works on a test site and is submitted</td></tr>
+      <tr><td class="k">E. Agency</td><td class="n">3 pw</td><td>Workspaces, client logins, white-label PDF, API keys</td><td>An agency manages five client sites with separate access</td></tr>
+      <tr class="tot"><td>Total</td><td class="n">20 pw</td><td colspan="2">Phase F (single sign-on, SOC 2) is not budgeted. Add about 6 pw only if a customer requires it.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Calendar, one developer</h3>
+  <div class="tw"><div class="gantt" role="img" aria-label="Timeline of phases over 22 weeks">
+    <div class="g-row"><span></span><div class="g-t"><em>1</em><em>2</em><em>3</em><em>4</em><em>5</em><em>6</em><em>7</em><em>8</em><em>9</em><em>10</em><em>11</em><em>12</em><em>13</em><em>14</em><em>15</em><em>16</em><em>17</em><em>18</em><em>19</em><em>20</em><em>21</em><em>22</em></div></div>
+    <div class="g-row"><span>A Foundation and billing</span><div class="g-t"><i style="grid-column:1/4"></i></div></div>
+    <div class="g-row"><span>B Live AI tracking</span><div class="g-t"><i style="grid-column:4/7"></i></div></div>
+    <div class="g-row"><span>C Digest and alerts</span><div class="g-t"><i style="grid-column:7/9"></i></div></div>
+    <div class="g-row"><span>Milestones</span><div class="g-t"><i class="ms" style="grid-column:6/7"></i><i class="ms" style="grid-column:8/9"></i></div></div>
+    <div class="g-row"><span>D1 Cloudflare</span><div class="g-t"><i class="live" style="grid-column:9/11"></i></div></div>
+    <div class="g-row"><span>D2 WordPress</span><div class="g-t"><i class="live" style="grid-column:11/13"></i></div></div>
+    <div class="g-row"><span>D3 Shopify</span><div class="g-t"><i class="live" style="grid-column:13/16"></i></div></div>
+    <div class="g-row"><span>D4 Wix</span><div class="g-t"><i class="live" style="grid-column:16/19"></i></div></div>
+    <div class="g-row"><span>E Agency</span><div class="g-t"><i class="grey" style="grid-column:19/22"></i></div></div>
+  </div></div>
+  <div class="legend"><span style="--c:var(--accent)">Before launch</span><span style="--c:var(--good)">Integrations, after launch</span><span style="--c:var(--muted)">Agency tier</span><span style="--c:var(--warn)">Milestone: paid beta at week 6, public launch at week 8</span></div>
+  <p>Submit the Shopify and Wix apps for review as early as possible in their phases. Marketplace reviews can take several weeks, and they run in parallel with the next phase.</p>
+  <h3>Success measures after launch</h3>
+  <ul>
+    <li>Activation: share of signups with a verified domain and a first report</li>
+    <li>Free to paid conversion and monthly logo churn by plan</li>
+    <li>AI cost as a share of revenue, target under 25%</li>
+    <li>Reports ready by 10:00 IST, target 95% then 99%</li>
+    <li>Share of marked-done fixes whose score rose at the next scan</li>
+  </ul>
+</section>
+
+<section id="costs">
+  <h2>12. Cost structure</h2>
+  <h3>12.1 Fixed infrastructure by stage, per month</h3>
+  <p class="lede">US dollar prices from vendor price lists as I know them. Confirm before budgeting (section 16).</p>
+  <div class="tw"><table>
+    <thead><tr><th>Item</th><th class="n">Launch (to ~50 paid)</th><th class="n">Base (~175 paid)</th><th class="n">Ambitious (~600 paid)</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Vercel Pro</td><td class="n">$20</td><td class="n">$60</td><td class="n">$150</td></tr>
+      <tr><td class="k">Supabase (Pro, larger compute, storage)</td><td class="n">$25</td><td class="n">$95</td><td class="n">$265</td></tr>
+      <tr><td class="k">Crawl and probe workers</td><td class="n">$15</td><td class="n">$60</td><td class="n">$250</td></tr>
+      <tr><td class="k">Resend email</td><td class="n">$20</td><td class="n">$35</td><td class="n">$90</td></tr>
+      <tr><td class="k">Sentry</td><td class="n">$26</td><td class="n">$50</td><td class="n">$80</td></tr>
+      <tr><td class="k">Redis for rate limits</td><td class="n">$0</td><td class="n">$10</td><td class="n">$30</td></tr>
+      <tr><td class="k">Support desk, uptime, analytics</td><td class="n">$20</td><td class="n">$40</td><td class="n">$150</td></tr>
+      <tr class="tot"><td>Subtotal</td><td class="n">$126</td><td class="n">$350</td><td class="n">$1,015</td></tr>
+      <tr><td class="k">In ₹ at 88</td><td class="n">₹11,100</td><td class="n">₹30,800</td><td class="n">₹89,300</td></tr>
+      <tr><td class="k">Bookkeeping and rounding</td><td class="n">₹3,900</td><td class="n">₹4,200</td><td class="n">₹700</td></tr>
+      <tr class="tot"><td>Fixed total used in the model</td><td class="n">₹15,000</td><td class="n">₹35,000</td><td class="n">₹90,000</td></tr>
+    </tbody>
+  </table></div>
+  <h3>12.2 Variable cost per account, per month</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Plan</th><th class="n">AI probes</th><th class="n">Crawl and compute</th><th class="n">Claude insights</th><th class="n">Search</th><th class="n">Notifications</th><th class="n">Other</th><th class="n">Total ₹</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Free</td><td class="n">7</td><td class="n">3</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">0</td><td class="n">10</td></tr>
+      <tr><td class="k">Starter</td><td class="n">150</td><td class="n">30</td><td class="n">40</td><td class="n">20</td><td class="n">10</td><td class="n">0</td><td class="n">250</td></tr>
+      <tr><td class="k">Growth</td><td class="n">760</td><td class="n">120</td><td class="n">150</td><td class="n">60</td><td class="n">80</td><td class="n">30</td><td class="n">1,200</td></tr>
+      <tr><td class="k">Agency</td><td class="n">2,570</td><td class="n">500</td><td class="n">600</td><td class="n">250</td><td class="n">250</td><td class="n">180</td><td class="n">4,350</td></tr>
+    </tbody>
+  </table></div>
+  <h3>12.3 One-time costs</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Item</th><th class="n">Low ₹</th><th class="n">High ₹</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Legal review of terms, privacy, customer contract</td><td class="n">25,000</td><td class="n">60,000</td></tr>
+      <tr><td class="k">GST registration and invoicing set-up with a CA, if not already done</td><td class="n">5,000</td><td class="n">15,000</td></tr>
+      <tr><td class="k">Trademark filing, one or two classes</td><td class="n">9,000</td><td class="n">18,000</td></tr>
+      <tr><td class="k">Independent security test before agency launch</td><td class="n">60,000</td><td class="n">1,50,000</td></tr>
+      <tr><td class="k">Domain and brand assets</td><td class="n">3,000</td><td class="n">25,000</td></tr>
+      <tr class="tot"><td>Total</td><td class="n">1,02,000</td><td class="n">2,68,000</td></tr>
+    </tbody>
+  </table></div>
+  <h3>12.4 Cash needed to reach launch</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Item</th><th class="n">In-house build, ₹</th><th class="n">Contract developer, ₹</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Running costs during 5 months of build (infra, AI testing, tools, about ₹20,000 a month)</td><td class="n">1,00,000</td><td class="n">1,00,000</td></tr>
+      <tr><td class="k">One-time costs (12.3)</td><td class="n">1,02,000 to 2,68,000</td><td class="n">1,02,000 to 2,68,000</td></tr>
+      <tr><td class="k">Developer, 5 months at ₹80,000 to ₹1,20,000 a month (assumption)</td><td class="n">0 (existing team)</td><td class="n">4,00,000 to 6,00,000</td></tr>
+      <tr class="tot"><td>Cash to launch</td><td class="n">2.0L to 3.7L</td><td class="n">6.0L to 9.7L</td></tr>
+    </tbody>
+  </table></div>
+  <p>Add a reserve of ₹1.0L to ₹1.5L for the first four months after launch, while contribution from paying accounts grows to cover fixed costs.</p>
+</section>
+
+<section id="finance">
+  <h2>13. Financial model</h2>
+  <h3>13.1 Unit economics per plan</h3>
+  <div class="barrow"><div><b>Starter</b> ₹999</div><div><div class="bar"><i class="c1" style="width:25.0%"></i><i class="c2" style="width:2.8%"></i><i class="c3" style="width:72.2%"></i></div><div class="cap">cost 25.0% · fee 2.8% · contribution 72.2%</div></div></div>
+  <div class="barrow"><div><b>Growth</b> ₹2,999</div><div><div class="bar"><i class="c1" style="width:40.0%"></i><i class="c2" style="width:2.8%"></i><i class="c3" style="width:57.2%"></i></div><div class="cap">cost 40.0% · fee 2.8% · contribution 57.2%</div></div></div>
+  <div class="barrow"><div><b>Agency</b> ₹9,999</div><div><div class="bar"><i class="c1" style="width:43.5%"></i><i class="c2" style="width:2.8%"></i><i class="c3" style="width:53.7%"></i></div><div class="cap">cost 43.5% · fee 2.8% · contribution 53.7%</div></div></div>
+  <div class="legend"><span style="--c:var(--bad)">Variable cost</span><span style="--c:var(--warn)">Payment fee</span><span style="--c:var(--good)">Contribution</span></div>
+  <div class="tw"><table>
+    <thead><tr><th>Plan</th><th class="n">Price</th><th class="n">Variable cost</th><th class="n">Payment fee</th><th class="n">Contribution</th><th class="n">Monthly churn (assumed)</th><th class="n">Lifetime value</th><th class="n">Max CAC at 3:1</th><th class="n">Placeholder CAC</th><th class="n">Payback</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Starter</td><td class="n">999</td><td class="n">250</td><td class="n">28</td><td class="n">721</td><td class="n">6.0%</td><td class="n">12,017</td><td class="n">4,006</td><td class="n">2,500</td><td class="n">3.5 months</td></tr>
+      <tr><td class="k">Growth</td><td class="n">2,999</td><td class="n">1,200</td><td class="n">84</td><td class="n">1,715</td><td class="n">4.5%</td><td class="n">38,112</td><td class="n">12,704</td><td class="n">8,000</td><td class="n">4.7 months</td></tr>
+      <tr><td class="k">Agency</td><td class="n">9,999</td><td class="n">4,350</td><td class="n">280</td><td class="n">5,369</td><td class="n">2.5%</td><td class="n">2,14,761</td><td class="n">71,587</td><td class="n">30,000</td><td class="n">5.6 months</td></tr>
+    </tbody>
+  </table></div>
+  <div class="flag"><b>Placeholders</b><p>Churn rates and acquisition costs are typical ranges for small-business software, not measurements from this product. Replace them with real figures from the paid beta.</p></div>
+
+  <h3>13.2 Twelve-month scenarios</h3>
+  <p>Paying accounts and free users are the month-12 position. Free users are active free accounts, with a paid share of 6.4%, 5.5% and 4.8% of all accounts in the three cases.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Month 12</th><th class="n">Conservative</th><th class="n">Base</th><th class="n">Ambitious</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Starter accounts</td><td class="n">30</td><td class="n">120</td><td class="n">400</td></tr>
+      <tr><td class="k">Growth accounts</td><td class="n">10</td><td class="n">50</td><td class="n">180</td></tr>
+      <tr><td class="k">Agency accounts</td><td class="n">1</td><td class="n">6</td><td class="n">25</td></tr>
+      <tr><td class="k">Free users</td><td class="n">600</td><td class="n">3,000</td><td class="n">12,000</td></tr>
+      <tr class="tot"><td>Paying accounts</td><td class="n">41</td><td class="n">176</td><td class="n">605</td></tr>
+      <tr><td class="k">Monthly revenue</td><td class="n">69,959</td><td class="n">3,29,824</td><td class="n">11,89,395</td></tr>
+      <tr><td class="k">Annualised revenue</td><td class="n">8.4L</td><td class="n">39.6L</td><td class="n">1.43 Cr</td></tr>
+      <tr><td class="k">Variable cost, free tier included</td><td class="n">29,850</td><td class="n">1,46,100</td><td class="n">5,44,750</td></tr>
+      <tr><td class="k">Payment fees (2.8%)</td><td class="n">1,959</td><td class="n">9,235</td><td class="n">33,303</td></tr>
+      <tr class="tot"><td>Gross margin</td><td class="n">38,150 (54.5%)</td><td class="n">1,74,489 (52.9%)</td><td class="n">6,11,342 (51.4%)</td></tr>
+      <tr><td class="k">Fixed infrastructure</td><td class="n">15,000</td><td class="n">35,000</td><td class="n">90,000</td></tr>
+      <tr class="tot"><td>Net before team and tax</td><td class="n">23,150</td><td class="n">1,39,489</td><td class="n">5,21,342</td></tr>
+    </tbody>
+  </table></div>
+  <p>The base case covers one salary of about ₹1.4L a month. A ₹1.5L team plus fixed costs and free-tier cost needs about 185 paying accounts at the base mix. Break-even on infrastructure alone is about 35 paying accounts at ₹40,000 a month of fixed cost, before counting free-tier cost.</p>
+
+  <h3>13.3 Sensitivity, base case</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Case</th><th class="n">Monthly revenue</th><th class="n">Net before team</th><th class="n">Gross margin</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Base</td><td class="n">3,29,824</td><td class="n">1,39,489</td><td class="n">52.9%</td></tr>
+      <tr><td class="k">Cost per AI query doubles</td><td class="n">3,29,824</td><td class="n">47,219</td><td class="n">24.9%</td></tr>
+      <tr><td class="k">All prices 20% lower</td><td class="n">2,63,859</td><td class="n">75,371</td><td class="n">41.8%</td></tr>
+      <tr><td class="k">US dollar costs rise 5% against the rupee</td><td class="n">3,29,824</td><td class="n">1,30,434</td><td class="n">50.7%</td></tr>
+      <tr><td class="k">AI cost doubles and prices 20% lower</td><td class="n">2,63,859</td><td class="n">−16,899</td><td class="n">6.9%</td></tr>
+      <tr><td class="k">Pricing option B: Growth ₹3,499, Agency ₹12,999</td><td class="n">3,72,824</td><td class="n">1,81,285</td><td class="n">58.0%</td></tr>
+    </tbody>
+  </table></div>
+  <p><b>Defences against the AI cost risk:</b> a hard monthly query budget per plan, a global daily spend cap, a 24-hour shared cache, cheaper engines for routine runs, and a quarterly review of vendor prices. A churn rise from 4.5% to 7% a month would shorten Growth lifetime value from about ₹38,000 to about ₹24,500.</p>
+
+  <h3>13.4 Try your own numbers</h3>
+  <div class="calc">
+    <div class="grid">
+      <label>Starter accounts<input id="n-s" type="number" min="0" value="120" inputmode="numeric"></label>
+      <label>Growth accounts<input id="n-g" type="number" min="0" value="50" inputmode="numeric"></label>
+      <label>Agency accounts<input id="n-a" type="number" min="0" value="6" inputmode="numeric"></label>
+      <label>Free users<input id="n-f" type="number" min="0" value="3000" inputmode="numeric"></label>
+      <label>Fixed cost, ₹ a month<input id="n-fix" type="number" min="0" value="35000" inputmode="numeric"></label>
+      <label>AI query cost<select id="n-pm"><option value="1">As planned</option><option value="1.5">50% higher</option><option value="2">Double</option><option value="0.7">30% lower</option></select></label>
+      <label>Price level<select id="n-pr"><option value="1">As planned</option><option value="0.9">10% lower</option><option value="0.8">20% lower</option><option value="B">Option B (Growth ₹3,499, Agency ₹12,999)</option></select></label>
+      <label>Team cost, ₹ a month<input id="n-team" type="number" min="0" value="0" inputmode="numeric"></label>
+    </div>
+    <div class="out">
+      <div><span>Monthly revenue</span><b id="o-mrr">-</b></div>
+      <div><span>Variable cost</span><b id="o-var">-</b></div>
+      <div><span>Payment fees</span><b id="o-fee">-</b></div>
+      <div><span>Gross margin</span><b id="o-gm">-</b></div>
+      <div><span>Net after fixed and team</span><b id="o-net">-</b></div>
+      <div><span>Annualised revenue</span><b id="o-arr">-</b></div>
+    </div>
+    <p class="mono" style="margin:10px 0 0;color:var(--muted)">Uses the plan prices in section 3 and the per-account costs in section 12.2.</p>
+  </div>
+</section>
+
+<section id="risks">
+  <h2>14. Risks</h2>
+  <div class="tw"><table>
+    <thead><tr><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th></tr></thead>
+    <tbody>
+      <tr><td class="k">AI query prices or limits change</td><td><span class="pill p-warn">Medium</span></td><td><span class="pill p-bad">High</span></td><td>Provider abstraction, spend caps, shared cache, measured cost before fixing limits, repricing clause in terms</td></tr>
+      <tr><td class="k">An automatic change breaks a customer's site</td><td><span class="pill p-warn">Medium</span></td><td><span class="pill p-bad">High</span></td><td>Approval-first flow, snapshot and one-click undo, low-risk change types only, post-change page check, liability wording in terms</td></tr>
+      <tr><td class="k">Search data vendor (Serper) disappears or Google objects</td><td><span class="pill p-warn">Medium</span></td><td><span class="pill p-warn">Medium</span></td><td>Search provider abstraction with a second vendor (DataForSEO or SerpAPI) wired in disabled</td></tr>
+      <tr><td class="k">Platform API changes or review rejection (Shopify, Wix, Google)</td><td><span class="pill p-warn">Medium</span></td><td><span class="pill p-warn">Medium</span></td><td>Cloudflare and WordPress first, custom distribution for early users, submit reviews early</td></tr>
+      <tr><td class="k">Large competitors copy AI tracking</td><td><span class="pill p-bad">High</span></td><td><span class="pill p-warn">Medium</span></td><td>Compete on local focus, INR pricing, WhatsApp, fix-and-verify loop, and accumulated daily history</td></tr>
+      <tr><td class="k">Crawling complaints or blocks</td><td><span class="pill p-warn">Medium</span></td><td><span class="pill p-n">Low</span></td><td>Respect robots.txt, identifiable user agent, polite rate, contact page</td></tr>
+      <tr><td class="k">Payment account approval delay</td><td><span class="pill p-n">Low</span></td><td><span class="pill p-bad">High</span></td><td>Apply to Razorpay at the start of Phase A, with a second gateway as backup</td></tr>
+      <tr><td class="k">Single developer is a bottleneck</td><td><span class="pill p-bad">High</span></td><td><span class="pill p-warn">Medium</span></td><td>Documented runbooks, staging, automated tests, optional second developer for D3 and D4</td></tr>
+      <tr><td class="k">Data breach</td><td><span class="pill p-n">Low</span></td><td><span class="pill p-bad">High</span></td><td>Section 10 controls, independent security test, breach response plan</td></tr>
+      <tr><td class="k">Free tier costs more than it converts</td><td><span class="pill p-warn">Medium</span></td><td><span class="pill p-warn">Medium</span></td><td>Weekly scans, 4 AI queries, one free project per verified domain, cap on total free accounts per month</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="decisions">
+  <h2>15. Decisions needed</h2>
+  <div class="two">
+    <div>
+      <h3>For the CTO</h3>
+      <ol>
+        <li>Worker platform: Fly.io, Railway, or AWS in Mumbai</li>
+        <li>Keep the Postgres queue or adopt a managed queue now</li>
+        <li>Key management: environment key with versioning, or a cloud KMS</li>
+        <li>Stay on Supabase and Vercel, or consolidate on one cloud</li>
+        <li>Integration scope for v1, and whether to ship a WordPress plugin</li>
+        <li>Agency data model: workspaces with roles, or separate accounts</li>
+        <li>Staging environment and the test suite required before billing goes live</li>
+      </ol>
+    </div>
+    <div>
+      <h3>For the CFO</h3>
+      <ol>
+        <li>Which legal entity bills customers, and GST registration timing</li>
+        <li>Final prices: base set or option B, and the annual discount</li>
+        <li>Monthly AI cost cap as a share of revenue</li>
+        <li>Gateway for non-Indian customers: Razorpay international or a merchant of record</li>
+        <li>Build route: in-house or contract, and the launch budget</li>
+        <li>Refund, dunning and cancellation policy</li>
+        <li>Foreign exchange policy, since most costs are in dollars and revenue is in rupees</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section id="assumptions">
+  <h2>16. Assumptions to verify</h2>
+  <div class="flag"><b>Not live-checked</b><p>Vendor prices, fee rates, tax thresholds and platform review rules in this report come from my own knowledge, not from a check of each vendor today. Verify each before it goes into a budget.</p></div>
+  <ul>
+    <li>Exchange rate of ₹88 to $1.</li>
+    <li>Razorpay fee of about 2% plus GST on the fee, with no monthly charge. International cards cost more.</li>
+    <li>Vercel Pro $20, Supabase Pro $25 plus compute, Resend $20, Sentry team plan, Fly.io small machines, Serper about $1 per 1,000 searches.</li>
+    <li>An average $0.02 per AI query across four engines with search tools.</li>
+    <li>Average crawl of 45 seconds and 10 concurrent crawls per worker.</li>
+    <li>Churn, acquisition cost, free-to-paid share and month-12 account counts are planning assumptions.</li>
+    <li>Developer rates of ₹80,000 to ₹1,20,000 a month for a contractor.</li>
+    <li>GST, e-invoicing and DPDP timelines, and the trademark and legal fees, to be confirmed by a chartered accountant and counsel.</li>
+  </ul>
+  <p>Not included: founder salary, sales and marketing spend, income tax, office costs, and any SOC 2 programme.</p>
+</section>
+
+<footer>Competitor Radar build report, draft 1.0. Figures are estimates for discussion and are not tax or legal advice.</footer>
+</main>
+</div>
+
+<script>
+(function(){
+  var P={s:999,g:2999,a:9999}, V={s:250,g:1200,a:4350,f:10}, PR={s:150,g:757,a:2570,f:7}, FEE=0.028;
+  var ids=['n-s','n-g','n-a','n-f','n-fix','n-pm','n-pr','n-team'];
+  function num(id){var v=parseFloat(document.getElementById(id).value);return isFinite(v)&&v>=0?v:0;}
+  function inr(x){var neg=x<0;var s=Math.round(Math.abs(x)).toLocaleString('en-IN');return (neg?'-':'')+'₹'+s;}
+  function calc(){
+    var n={s:num('n-s'),g:num('n-g'),a:num('n-a'),f:num('n-f')}, fix=num('n-fix'), pm=num('n-pm'), team=num('n-team');
+    var prSel=document.getElementById('n-pr').value, pr=prSel==='B'?1:parseFloat(prSel)||1;
+    var price=prSel==='B'?{s:999,g:3499,a:12999}:P;
+    var mrr=0,vc=0;
+    ['s','g','a'].forEach(function(k){mrr+=n[k]*price[k]*pr; vc+=n[k]*(V[k]+PR[k]*(pm-1));});
+    vc+=n.f*(V.f+PR.f*(pm-1));
+    var fee=mrr*FEE, gm=mrr-vc-fee, net=gm-fix-team;
+    document.getElementById('o-mrr').textContent=inr(mrr);
+    document.getElementById('o-var').textContent=inr(vc);
+    document.getElementById('o-fee').textContent=inr(fee);
+    document.getElementById('o-gm').textContent=mrr>0?inr(gm)+' ('+(gm/mrr*100).toFixed(1)+'%)':'-';
+    var o=document.getElementById('o-net'); o.textContent=inr(net); o.className=net<0?'bad':'good';
+    document.getElementById('o-arr').textContent=inr(mrr*12);
+  }
+  ids.forEach(function(id){var el=document.getElementById(id); if(el){el.addEventListener('input',calc);el.addEventListener('change',calc);}});
+  calc();
+})();
+</script>

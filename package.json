@@ -1,0 +1,39 @@
+{
+  "name": "radar-cloud",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "next dev -p 4020",
+    "build": "next build",
+    "start": "next start",
+    "test": "node --test \"tests/unit/**/*.test.mjs\" \"tests/integration/**/*.test.mjs\"",
+    "test:unit": "node --test \"tests/unit/**/*.test.mjs\"",
+    "test:integration": "node --test \"tests/integration/**/*.test.mjs\"",
+    "backup": "node scripts/backup.mjs",
+    "restore-drill": "node scripts/restore-drill.mjs",
+    "rotate-keys": "node scripts/rotate-token-keys.mjs",
+    "archive": "bash scripts/make-archive.sh",
+    "test:postgres": "node --test --test-concurrency=1 \"tests/postgres/**/*.test.mjs\"",
+    "lint": "eslint ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.118.0",
+    "cheerio": "^1.0.0",
+    "next": "^15.5.28",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "undici": "6.29.1"
+  },
+  "private": true,
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.15",
+    "@electric-sql/pglite-socket": "^0.2.18",
+    "eslint": "^9.39.5",
+    "globals": "^17.14.0",
+    "pg": "^8.23.1"
+  }
+}
